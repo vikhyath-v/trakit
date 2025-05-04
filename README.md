@@ -27,7 +27,7 @@ A React-based web application that displays your Spotify listening statistics in
 
 ### Step 1: Spotify Developer Setup
 
-1. Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+1. Go to Spotify Developer Dashboard
 2. Create a new application
 3. Set the redirect URI to `http://localhost:3000/callback`
 4. Note your Client ID and Client Secret
@@ -73,13 +73,20 @@ npm install
 npm start
 ```
 
+### Alternative: Run Both Servers Together
+
+You can run both the backend and frontend with a single command:
+
+```bash
+npm run dev
+```
+
 ## Usage
 
-1. Start the Flask server
-2. Start the React development server
-3. Open your browser and navigate to `http://localhost:3000`
-4. Click "Login with Spotify" to authorize the application
-5. Explore your music stats!
+1. Start both servers using `npm run dev` in the project root
+2. Open your browser and navigate to `http://localhost:3000`
+3. Click "Login with Spotify" to authorize the application
+4. Explore your music stats!
 
 ## Project Structure
 

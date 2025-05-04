@@ -1,0 +1,14 @@
+{
+  "name": "react-spotify",
+  "version": "1.0.0",
+  "description": "Spotify Stats App with React frontend and Flask backend",
+  "scripts": {
+    "start-server": "python app.py",
+    "start-client": "cd client && npm start",
+    "dev": "concurrently \"npm run start-server\" \"npm run start-client\"",
+    "install-deps": "npm install && cd client && npm install"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 

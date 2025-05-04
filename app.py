@@ -5,23 +5,13 @@ import os
 from flask import Flask, request, jsonify, redirect, session, send_from_directory, make_response
 from flask_cors import CORS
 
-app = Flask(__name__, static_folder='client/build', static_url_path='')
-# Get environment variables or use default values
-CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID", "a0b66d1ecaca4d8f9bbac1dc94b03f49")
-CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET", "a6c84e5c4048473cb648dc1ab09094de")
-FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:3000")
-BACKEND_URL = os.environ.get("BACKEND_URL", "http://localhost:5000")
-REDIRECT_URI = f"{FRONTEND_URL}/callback"
+app = Flask(__name__)
+CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
+app.secret_key = "53d453d453d453d453d453d453d453d4"
 
-# Configure CORS for development or production
-if os.environ.get("ENVIRONMENT") == "production":
-    CORS(app, supports_credentials=True, origins=[FRONTEND_URL])
-else:
-    CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
-
-# Use a secret key from environment variable in production
-app.secret_key = os.environ.get("SECRET_KEY", "53d453d453d453d453d453d453d453d4")
-
+CLIENT_ID = "a0b66d1ecaca4d8f9bbac1dc94b03f49"
+CLIENT_SECRET = "a6c84e5c4048473cb648dc1ab09094de"
+REDIRECT_URI = "http://127.0.0.1:3000/callback"
 AUTH_URL = "https://accounts.spotify.com/authorize"
 TOKEN_URL = "https://accounts.spotify.com/api/token"
 API_BASE_URL = "https://api.spotify.com/v1"
@@ -188,18 +178,5 @@ def auth_status():
 def test():
     return jsonify({"status": "ok", "message": "API is working"})
 
-# Serve React App in production
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve(path):
-    if os.environ.get("ENVIRONMENT") == "production":
-        if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
-            return send_from_directory(app.static_folder, path)
-        else:
-            return send_from_directory(app.static_folder, 'index.html')
-    else:
-        return jsonify({"message": "API is running. Frontend is served separately in development mode."})
-
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port, debug=os.environ.get("ENVIRONMENT") != "production") 
+    app.run(host='0.0.0.0', port=5000, debug=True) 
